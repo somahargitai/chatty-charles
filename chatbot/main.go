@@ -31,9 +31,9 @@ func main() {
 	// Create a scanner for reading user input
 	scanner := bufio.NewScanner(os.Stdin)
 
-	fmt.Println("Welcome to Chatty Charles! Type 'exit' to quit.")
+	// Print welcome art
+	printWelcomeArt()
 	fmt.Printf("Using model: %s\n", config.Model)
-	fmt.Println("--------------------------------------------")
 
 	// Main conversation loop
 	for {
@@ -50,7 +50,7 @@ func main() {
 
 		// Check for exit command
 		if strings.ToLower(input) == "exit" {
-			fmt.Println("Goodbye!")
+			printGoodbyeArt()
 			return
 		}
 
