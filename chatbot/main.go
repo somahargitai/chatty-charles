@@ -9,6 +9,8 @@ import (
 	"syscall"
 )
 
+const historyFile = "chat-history.json"
+
 func main() {
 	// Load configuration
 	config, err := LoadConfig()
@@ -19,6 +21,8 @@ func main() {
 
 	// Initialize chat history and OpenAI client
 	chatHistory := NewChatHistory()
+	// Load chat history if available
+	_ = chatHistory.LoadFromFile(historyFile)
 	client := NewOpenAIClient(config)
 
 	// Add system message to set the context
@@ -50,6 +54,7 @@ func main() {
 
 		// Check for exit command
 		if strings.ToLower(input) == "exit" {
+			chatHistory.SaveToFile(historyFile) // Save on exit
 			printGoodbyeArt()
 			return
 		}
@@ -76,4 +81,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error reading input: %v\n", err)
 		os.Exit(1)
 	}
+
+	// Save history if exiting due to error or EOF
+	chatHistory.SaveToFile(historyFile)
 }
