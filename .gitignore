@@ -23,4 +23,6 @@ go.work
 # OS specific
 .DS_Store 
 
+# Project files
 project-plan.md
+chatbot/chat-history.json
